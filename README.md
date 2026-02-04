@@ -28,7 +28,7 @@ This project implements a ResNet50-based classifier to distinguish between real 
 1. Clone this repository:
 ```bash
 git clone <your-repo-url>
-cd Finals
+cd ResNet50-CIFAKE-Classification
 ```
 
 2. Create a virtual environment:
@@ -95,4 +95,5 @@ See `requirements.txt` for the complete list. Key dependencies include:
 - Model files (`.h5`) and dataset directories are excluded from the repository due to size constraints
 - Ensure you have sufficient GPU memory for training
 - The notebook includes GPU detection and configuration code
+
 
