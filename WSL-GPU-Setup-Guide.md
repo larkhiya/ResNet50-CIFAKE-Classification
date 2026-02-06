@@ -37,6 +37,11 @@ sudo apt install -y python3-pip python3-venv
 
 Change to your project directory (update the path to match your setup):
 
+```bash
+cd "/mnt/c/Users/.../ResNet50-CIFAKE-Classification"
+```
+
+**Note:** Replace the path above with your actual project location if different.
 
 ---
 
