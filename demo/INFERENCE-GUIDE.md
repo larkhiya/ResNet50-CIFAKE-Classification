@@ -2,7 +2,8 @@
 
 This guide shows how to:
 
-- **Train** a ResNet model in your notebook
+- **Restore** pre-trained models (if you cloned the repo)
+- **Train** a ResNet model in your notebook (optional, if you want to train from scratch)
 - **Export** it as a `.h5` file
 - **Use the demo program** in the `demo/` folder where you input an image and it outputs **REAL** or **FAKE**
 
@@ -10,7 +11,52 @@ This guide shows how to:
 
 ---
 
-## 1) Train and export your model (`.h5`)
+## 1) Restore pre-trained models (if cloning the repo)
+
+If you cloned this repository, the model files are tracked with **Git LFS** (Large File Storage). By default, Git only downloads pointer files, not the actual model weights.
+
+### 1.1 Check if Git LFS is installed
+
+```bash
+git lfs version
+```
+
+If not installed, install it first:
+
+- **Ubuntu/Debian (WSL)**:
+  ```bash
+  sudo apt update && sudo apt install git-lfs
+  git lfs install
+  ```
+
+- **Windows**:
+  Download from https://git-lfs.com/ or use `winget install GitHub.GitLFS`
+
+### 1.2 Pull the actual model files
+
+From the project root, run:
+
+```bash
+git lfs pull
+```
+
+This downloads the actual model weights:
+- `models/best_model_weights.h5` (checkpoint)
+- `models/resnet50_binary.h5` (final exported model)
+
+### 1.3 Verify the models were restored
+
+```bash
+ls -lh models/
+```
+
+You should see files that are several MB in size (not just a few bytes). If the files are only ~130 bytes, they are still LFS pointers—run `git lfs pull` again.
+
+Once restored, skip to **Section 4** to run the demo program.
+
+---
+
+## 2) Train and export your model (`.h5`) — Optional
 
 1. Open the notebook:
 
@@ -35,7 +81,7 @@ If you see `resnet50_binary.h5`, you’re ready for inference.
 
 ---
 
-## 2) Understand the output (REAL vs FAKE)
+## 3) Understand the output (REAL vs FAKE)
 
 Your model ends with:
 
@@ -55,7 +101,7 @@ Why REAL is treated as “1”: with CIFAKE folders `FAKE/` and `REAL/`, Keras t
 
 ---
 
-## 3) Run the demo program (CLI)
+## 4) Run the demo program (CLI)
 
 The `demo/` folder contains:
 
@@ -65,7 +111,7 @@ The `demo/` folder contains:
 
 > Make sure you have moved your sample images into `demo/` (e.g. `git mv image-ai-test.jpg demo/` and `git mv image-real-test.jpg demo/`).
 
-### 3.1 Activate your environment
+### 4.1 Activate your environment
 
 In WSL/Linux:
 
@@ -73,7 +119,7 @@ In WSL/Linux:
 source .venv-wsl/bin/activate
 ```
 
-### 3.2 Run prediction on a 32×32 image
+### 4.2 Run prediction on a 32×32 image
 
 From the project root:
 
@@ -91,7 +137,7 @@ Prediction: FAKE
 p(REAL) = 0.000071 (threshold=0.5)
 ```
 
-### 3.3 If your image is NOT 32×32
+### 4.3 If your image is NOT 32×32
 
 The requirement says your input *must* be 32×32. If you still want the script to auto-resize, run:
 
@@ -101,7 +147,7 @@ python3 demo/predict_image.py --image path/to/any_size.jpg --resize
 
 ---
 
-## 4) (Optional) Programmatic usage (import as a module)
+## 5) (Optional) Programmatic usage (import as a module)
 
 You can also import the functions from `demo/predict_image.py` inside another Python app if you want, since all the logic lives in that single file.
 
@@ -118,7 +164,7 @@ print(result.label, result.probability_real)
 
 ---
 
-## 5) Basic tests (recommended)
+## 6) Basic tests (recommended)
 
 To validate preprocessing + label mapping:
 
